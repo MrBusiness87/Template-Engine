@@ -1,31 +1,15 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
+const inquirer = require('inquirer');
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 
-const {
-  defineEmployee,
-  employeeQuestions,
-  managerQuestions,
-  engineerQuestions,
-  internQuestions,
-} = inquire;
-
-const render = require("./lib/htmlRenderer");
-
-
-// Write code to use inquirer to gather information about the development team members,
 const inquire = inquirer.prompt({
   defineEmployee: [{
     type: "list",
-    message: "Enter Personnel:",
+    message: "What is your position?",
     name: "userChoice",
-    choices: ["Engineer", "Intern", "Complete"]
+    choices: ["Engineer", "Intern", "Manager"]
   }],
   employeeQuestions: [{
       type: "input",
@@ -34,7 +18,7 @@ const inquire = inquirer.prompt({
     },
     {
       type: "input",
-      message: "Please enter your employee ID number:",
+      message: "What is your employee ID number?",
       name: "id",
     },
     {
@@ -68,8 +52,7 @@ const htmlRenderer = require('./lib/htmlRenderer');
 const employeeArray = [];
 
 function init() {
-  inquirer
-    .prompt(employeeQuestions.concat(managerQuestions))
+  inquire(employeeQuestions.concat(managerQuestions))
     .then(({
       name,
       id,
@@ -83,8 +66,7 @@ function init() {
 }
 
 function getEmployee() {
-  inquirer
-    .prompt(defineEmployee)
+  inquire(defineEmployee)
     .then(({
       userChoice
     }) => {
@@ -102,9 +84,22 @@ function getEmployee() {
     })
 }
 
+function getEngineer() {
+  inquire(employeeQuestions.concat(engineerQuestions))
+    .then(({
+      name,
+      id,
+      email,
+      githubUsername
+    }) => {
+      let engineer = new Engineer(name, id, githubUsername, email);
+      employeeArray.push(engineer);
+      getEmployee();
+    })
+}
+
 function getIntern() {
-  inquirer
-    .prompt(employeeQuestions.concat(internQuestions))
+  inquire(employeeQuestions.concat(internQuestions))
     .then(({
       name,
       id,
