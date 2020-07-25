@@ -29,7 +29,7 @@ const gatherInfo = async () => {
     {
       type: "checkbox",
       message: "Position",
-      name: "position",
+      name: "role",
       choices: ["Manager", "Engineer", "Intern"],
     },
     {
@@ -50,4 +50,15 @@ gatherInfo()
 
 const htmlRenderer = require('./lib/htmlRenderer');
 
-function htmlRenderer(allAnswers);
+function init() {
+  htmlRenderer.gatherInfo
+  fs.writeFile("index.html", htmlRenderer(gatherInfo),
+    function (err) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("!FILE CREATED!");
+    });
+}
+
+init();
