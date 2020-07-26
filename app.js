@@ -27,10 +27,27 @@ const gatherInfo = async () => {
       name: "email",
     },
     {
-      type: "checkbox",
+      type: "list",
       message: "Position",
       name: "role",
       choices: ["Manager", "Engineer", "Intern"],
+    },
+    {
+      type: "input",
+      message: "Manager input office number:",
+      name: "officeNumber",
+      default: "100",
+    },
+    {
+      type: "input",
+      message: "Engineer input GitHub Username:",
+      name: "github",
+    },
+    {
+      type: "input",
+      message: "Inern input School:",
+      name: "school",
+      default: "UCLA",
     },
     {
       type: "confirm",
@@ -52,7 +69,7 @@ const htmlRenderer = require('./lib/htmlRenderer');
 
 function init() {
   htmlRenderer.gatherInfo
-  fs.writeFile("index.html", htmlRenderer(gatherInfo),
+  fs.writeFile("index.html", htmlRenderer(allAnswers),
     function (err) {
       if (err) {
         return console.log(err);
