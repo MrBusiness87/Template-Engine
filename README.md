@@ -32,9 +32,9 @@ Make sure you have all the files in the repository along with whatever other npm
 
 ### Usage:
 
-This is a great way to quickly build new department staff pages.
+This is a great way to quickly build new department staff pages. Link on usage of my application: https://drive.google.com/file/d/1TtIrOnTCnYXD4uNnTkNacYkFAat9BctR/view
 
-### Contribution:
+### Running Application:
 
 Run the repo in the terminal by using the command 'node app.js', if you want to run the repo tests then 'npm run tests'.
 
