@@ -3,7 +3,7 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 var inquirer = require('inquirer');
-const htmlRenderer = require('./lib/htmlRenderer');
+const render = require('./lib/htmlRenderer');
 
 const path = require("path");
 const fs = require("fs");
@@ -59,8 +59,26 @@ const gatherInfo = async () => {
       default: true,
     },
   ]);
-  console.log(answers)
-  allAnswers = [...allAnswers, answers]
+  switch (answers.role) {
+    case "Manager":
+      const newManager = new Manager(answers.name, answers.id, answers.officeNumber, answers.email)
+      console.log(newManager);
+      allAnswers = [...allAnswers, newManager]
+      break;
+    case "Intern":
+      const newIntern = new Intern(answers.name, answers.id, answers.school, answers.email)
+      console.log(newIntern);
+      allAnswers = [...allAnswers, newIntern]
+      break;
+    case "Engineer":
+      const newEngineer = new Engineer(answers.name, answers.id, answers.github, answers.email)
+      console.log(newEngineer);
+      allAnswers = [...allAnswers, newEngineer]
+      break;
+
+    default:
+      break;
+  }
   if (answers.continue) {
     gatherInfo()
   }
@@ -71,14 +89,14 @@ const gatherInfo = async () => {
 
 
 function init() {
-
-  fs.writeFile("index.html", htmlRenderer(allAnswers),
-    function (err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("!FILE CREATED!");
-    });
+  fs.writeFileSync('index.html', render(allAnswers), "utf-8")
+  // function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log("!FILE CREATED!");
+  // });
 }
+
 
 gatherInfo()
