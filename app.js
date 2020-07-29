@@ -3,6 +3,8 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 var inquirer = require('inquirer');
+const htmlRenderer = require('./lib/htmlRenderer');
+
 const path = require("path");
 const fs = require("fs");
 
@@ -42,6 +44,7 @@ const gatherInfo = async () => {
       type: "input",
       message: "Engineer input GitHub Username:",
       name: "github",
+      default: "username@github.com",
     },
     {
       type: "input",
@@ -62,13 +65,13 @@ const gatherInfo = async () => {
     gatherInfo()
   }
   console.log(allAnswers)
+  init();
 };
-gatherInfo()
 
-const htmlRenderer = require('./lib/htmlRenderer');
+
 
 function init() {
-  htmlRenderer.gatherInfo
+
   fs.writeFile("index.html", htmlRenderer(allAnswers),
     function (err) {
       if (err) {
@@ -78,4 +81,4 @@ function init() {
     });
 }
 
-init();
+gatherInfo()
